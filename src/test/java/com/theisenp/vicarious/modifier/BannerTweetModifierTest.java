@@ -1,8 +1,14 @@
 package com.theisenp.vicarious.modifier;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import twitter4j.Status;
 
 /**
  * Unit tests for {@link BannerTweetModifier}
@@ -10,6 +16,106 @@ import org.junit.Test;
  * @author patrick.theisen
  */
 public class BannerTweetModifierTest {
+
+	// Data
+	private BannerTweetModifier modifier;
+
+	@Before
+	public void setUp() {
+		modifier = new BannerTweetModifier();
+	}
+
+	@After
+	public void tearDown() {
+		modifier = null;
+	}
+
+	@Test
+	public void testModifyNoHulk() {
+		String input = "TEST SENTENCE.";
+		String expected = "Test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkBeginningOfTweet() {
+		String input = "HULK TEST SENTENCE.";
+		String expected = "Bruce test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkBeginningOfSentence() {
+		String input = "TEST SENTENCE. HULK TEST SENTENCE.";
+		String expected = "Test sentence. Bruce test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkMiddleOfSentence() {
+		String input = "TEST HULK SENTENCE.";
+		String expected = "Test bruce sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkPlural() {
+		String input = "HULKS TEST SENTENCE.";
+		String expected = "Bruces test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkPossessive() {
+		String input = "HULK'S TEST SENTENCE.";
+		String expected = "Bruce's test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyHulkTooLong() {
+		StringBuilder builder = new StringBuilder();
+		for(int i = 0; i < 136; i++) {
+			builder.append("A");
+		}
+		builder.append("HULK");
+		String input = builder.toString();
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		assertThat(modifier.modify(tweet)).isNull();
+	}
 
 	// @formatter:off
 	private static final String[] HULK_TWEETS = {
