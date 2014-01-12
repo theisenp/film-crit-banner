@@ -1,6 +1,7 @@
 package com.theisenp.vicarious;
 
 import java.io.File;
+import java.io.IOException;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -36,9 +37,9 @@ public class BannerVicariousFactory implements VicariousFactory {
 	private final TweetLogger logger;
 
 	/**
-	 * 
+	 * @throws IOException
 	 */
-	public BannerVicariousFactory() {
+	public BannerVicariousFactory() throws IOException {
 		Twitter twitter = TwitterFactory.getSingleton();
 		File file = new File(FILE_PATH);
 
