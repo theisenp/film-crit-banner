@@ -12,51 +12,65 @@ import org.junit.Test;
 public class BannerUtilsTest {
 
 	@Test
-	public void testFixCaseSingleSentence() {
+	public void testBannerizeSingleSentence() {
 		String input = "TEST SENTENCE.";
 		String expected = "Test sentence.";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseMultipleSentencesWithPeriods() {
+	public void testBannerizeMultipleSentencesWithPeriods() {
 		String input = "TEST SENTENCE. TEST SENTENCE.";
 		String expected = "Test sentence. Test sentence.";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseMultipleSentencesWithExclamationPoint() {
+	public void testBannerizeMultipleSentencesWithExclamationPoint() {
 		String input = "TEST SENTENCE! TEST SENTENCE!";
 		String expected = "Test sentence! Test sentence!";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseMultipleSentencesWithQuestionMark() {
+	public void testBannerizeMultipleSentencesWithQuestionMark() {
 		String input = "TEST SENTENCE? TEST SENTENCE?";
 		String expected = "Test sentence? Test sentence?";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseMultipleSentencesWithEllipsis() {
+	public void testBannerizeMultipleSentencesWithEllipsis() {
 		String input = "TEST SENTENCE... TEST SENTENCE...";
 		String expected = "Test sentence... Test sentence...";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseMultipleSentencesWithWhitespace() {
+	public void testBannerizeMultipleSentencesWithWhitespace() {
 		String input = "   \tTEST SENTENCE...    \tTEST SENTENCE...";
 		String expected = "   \tTest sentence...    \tTest sentence...";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 
 	@Test
-	public void testFixCaseOnlySymbols() {
+	public void testBannerizeUser() {
+		String input = "TEST @TEST_USER";
+		String expected = "Test @TEST_USER";
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
+	}
+
+	@Test
+	public void testBannerizeLink() {
+		String input = "TEST http://t.co/ABC";
+		String expected = "Test http://t.co/ABC";
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
+	}
+
+	@Test
+	public void testBannerizeOnlySymbols() {
 		String input = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?";
 		String expected = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?";
-		assertThat(BannerUtils.fixCase(input)).isEqualTo(expected);
+		assertThat(BannerUtils.bannerize(input)).isEqualTo(expected);
 	}
 }

@@ -3,7 +3,8 @@ package com.theisenp.vicarious.modifier;
 import com.theisenp.vicarious.utils.BannerUtils;
 
 /**
- * TODO
+ * Implementation of {@link BaseTweetTextModifier} that uses 'Bruce' instead of
+ * 'Hulk' and uses normal case instead of all-caps
  * 
  * @author patrick.theisen
  */
@@ -16,6 +17,6 @@ public class BannerTweetModifier extends BaseTweetTextModifier {
 	@Override
 	protected String modifyText(String text) {
 		String bruceText = text.replace(HULK_NAME, BRUCE_NAME);
-		return BannerUtils.fixCase(bruceText);
+		return BannerUtils.bannerize(bruceText);
 	}
 }
