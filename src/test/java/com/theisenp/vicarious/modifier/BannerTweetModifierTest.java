@@ -31,9 +31,105 @@ public class BannerTweetModifierTest {
 	}
 
 	@Test
-	public void testModifyNoHulk() {
+	public void testModifySingleSentence() {
 		String input = "TEST SENTENCE.";
 		String expected = "Test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyMultipleSentencesWithPeriods() {
+		String input = "TEST SENTENCE. TEST SENTENCE.";
+		String expected = "Test sentence. Test sentence.";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyMultipleSentencesWithExclamationPoint() {
+		String input = "TEST SENTENCE! TEST SENTENCE!";
+		String expected = "Test sentence! Test sentence!";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyMultipleSentencesWithQuestionMark() {
+		String input = "TEST SENTENCE? TEST SENTENCE?";
+		String expected = "Test sentence? Test sentence?";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyMultipleSentencesWithEllipsis() {
+		String input = "TEST SENTENCE... TEST SENTENCE...";
+		String expected = "Test sentence... Test sentence...";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyMultipleSentencesWithWhitespace() {
+		String input = "   \tTEST SENTENCE...    \tTEST SENTENCE...";
+		String expected = "   \tTest sentence...    \tTest sentence...";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyUser() {
+		String input = "TEST @TEST_USER";
+		String expected = "Test @TEST_USER";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyLink() {
+		String input = "TEST http://t.co/ABC";
+		String expected = "Test http://t.co/ABC";
+
+		Status tweet = mock(Status.class);
+		when(tweet.getText()).thenReturn(input);
+
+		String actual = modifier.modify(tweet).getStatus();
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	public void testModifyOnlySymbols() {
+		String input = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?";
+		String expected = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?";
 
 		Status tweet = mock(Status.class);
 		when(tweet.getText()).thenReturn(input);
