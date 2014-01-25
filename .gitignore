@@ -2,5 +2,6 @@
 .lastTweet
 .project
 .settings
+dependency-reduced-pom.xml
 target
 twitter4j.properties
