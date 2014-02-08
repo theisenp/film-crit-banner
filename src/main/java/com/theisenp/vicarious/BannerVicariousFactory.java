@@ -13,7 +13,8 @@ import com.theisenp.vicarious.logger.TweetLogger;
 import com.theisenp.vicarious.modifier.BannerTweetModifier;
 import com.theisenp.vicarious.modifier.TweetModifier;
 import com.theisenp.vicarious.provider.BaseTweetProvider;
-import com.theisenp.vicarious.provider.FileUserTweetsFetcher;
+import com.theisenp.vicarious.provider.FileIntervalTweetFetcher;
+import com.theisenp.vicarious.provider.TimelineTweetFetcher;
 import com.theisenp.vicarious.provider.TweetFetcher;
 import com.theisenp.vicarious.provider.TweetProvider;
 import com.theisenp.vicarious.publisher.BlockingTweetPublisher;
@@ -44,7 +45,8 @@ public class BannerVicariousFactory implements VicariousFactory {
 		File file = new File(FILE_PATH);
 
 		// Create the provider
-		TweetFetcher fetcher = new FileUserTweetsFetcher(USER, file);
+		TimelineTweetFetcher delegate = new TimelineTweetFetcher(USER);
+		TweetFetcher fetcher = new FileIntervalTweetFetcher(file, delegate);
 		provider = new BaseTweetProvider(twitter, fetcher);
 
 		// Create the modifier
