@@ -1,6 +1,8 @@
 FilmCritBanner
 ==============
 
+[![Build Status](https://travis-ci.org/theisenp/film-crit-banner.png?branch=master)](https://travis-ci.org/theisenp/film-crit-banner)
+
 A [Vicarious][1] client that pulls tweets from [@FilmCritHULK][2] and republishes them in a less... aggressive manner as [@FilmCritBanner][3].
 
 Usage
